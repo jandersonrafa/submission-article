@@ -1,11 +1,13 @@
 package br.edu.ulbra.submissoes.input;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Informações de Usuário")
 public class UserInput {
 
+    @JsonIgnore
     @ApiModelProperty(example = "1", notes = "Identificador")
     private Long id;
     @ApiModelProperty(example = "user1", notes = "Username")

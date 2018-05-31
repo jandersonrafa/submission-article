@@ -2,9 +2,17 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Pagina inicial</title>
+        <title>Dados do usuário</title>
     </head>
     <body>
-        Pagina inicial
+
+        <p th:text="${error}" th:if="${error}" />
+        <div th:if="${user}">
+            <p th:text="${user.id}"></p>
+            <p th:text="${user.email}"></p>
+            <p th:text="${user.username}"></p>
+            <p th:text="${user.nome}"></p>
+        </div>
+
     </body>
 </html>

@@ -19,48 +19,47 @@ public class UserService {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, ModelMapper modelMapper){
+    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
 
     public User save(UserInput userInput, boolean isUpdate) throws UserException {
 
-        if (userInput == null){
+        if (userInput == null) {
             throw new UserException("Dados não informados");
         }
-        if (StringUtils.isEmpty(userInput.getUsername())){
+        if (StringUtils.isEmpty(userInput.getUsername())) {
             throw new UserException("Username não informado");
         }
-        if (StringUtils.isEmpty(userInput.getNome())){
+        if (StringUtils.isEmpty(userInput.getNome())) {
             throw new UserException("Nome não informado");
         }
-        if (StringUtils.isEmpty(userInput.getEmail())){
+        if (StringUtils.isEmpty(userInput.getEmail())) {
             throw new UserException("E-mail não informado");
         }
-        if ((!StringUtils.isEmpty(userInput.getPassword())) && (!userInput.getPassword().equals(userInput.getPasswordConfirm()))){
+        if ((!StringUtils.isEmpty(userInput.getPassword())) && (!userInput.getPassword().equals(userInput.getPasswordConfirm()))) {
             throw new UserException("Senhas nao conferem");
         }
 
-        User user;
-        if (isUpdate){
+        if (isUpdate) {
             this.findById(userInput.getId());
         }
-        user = modelMapper.map(userInput, User.class);
+        User user = modelMapper.map(userInput, User.class);
         return userRepository.save(user);
 
     }
 
     public User findById(Long userId) throws UserException {
         Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()){
+        if (user.isPresent()) {
             return user.get();
         } else {
             throw new UserException("Usuário não encontrado");
         }
     }
 
-    public void delete(Long userId) throws UserException{
+    public void delete(Long userId) throws UserException {
         User user = findById(userId);
         userRepository.delete(user);
     }
